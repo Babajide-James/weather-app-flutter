@@ -412,49 +412,54 @@ class _Header extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 18),
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: searchController,
-                textInputAction: TextInputAction.search,
-                onSubmitted: (_) => onSearch(),
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: 'Search any city',
-                  hintStyle: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.55),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 70,
+                child: TextField(
+                  controller: searchController,
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (_) => onSearch(),
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: 'Search any city',
+                    hintStyle: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.55),
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.search_rounded,
+                      color: Colors.white,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withValues(alpha: 0.12),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
-                  prefixIcon: const Icon(
-                    Icons.search_rounded,
-                    color: Colors.white,
+                ),
+              ),
+              const SizedBox(width: 12),
+              FilledButton(
+                onPressed: onSearch,
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: const Color(0xFF08213B),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
                   ),
-                  filled: true,
-                  fillColor: Colors.white.withValues(alpha: 0.12),
-                  border: OutlineInputBorder(
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(22),
-                    borderSide: BorderSide.none,
                   ),
                 ),
+                child: const Text('Go'),
               ),
-            ),
-            const SizedBox(width: 12),
-            FilledButton(
-              onPressed: onSearch,
-              style: FilledButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: const Color(0xFF08213B),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22),
-                ),
-              ),
-              child: const Text('Go'),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -512,6 +517,7 @@ class _CurrentWeatherCard extends StatelessWidget {
                   children: [
                     Text(
                       snapshot.locationName,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headlineMedium
                           ?.copyWith(
                             color: foreground,
@@ -524,6 +530,7 @@ class _CurrentWeatherCard extends StatelessWidget {
                         if (snapshot.region.isNotEmpty) snapshot.region,
                         if (snapshot.country.isNotEmpty) snapshot.country,
                       ].join(', '),
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(
                         context,
                       ).textTheme.bodyLarge?.copyWith(color: secondary),
@@ -806,6 +813,7 @@ class _DailyTile extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
+            flex: 2,
             child: Text(
               DateFormat('EEEE').format(item.date),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -816,21 +824,23 @@ class _DailyTile extends StatelessWidget {
           ),
           Icon(_conditionIcon(item.iconKey, true), color: Colors.white),
           const SizedBox(width: 12),
-          SizedBox(
-            width: 72,
+          Expanded(
+            flex: 1,
             child: Text(
               '${item.chanceOfRain}%',
               textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
             ),
           ),
-          SizedBox(
-            width: 88,
+          Expanded(
+            flex: 1,
             child: Text(
               '${item.minTempC.round()}° / ${item.maxTempC.round()}°',
               textAlign: TextAlign.right,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
