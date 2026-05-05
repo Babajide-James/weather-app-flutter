@@ -1,10 +1,52 @@
 # SkyCast Weather App
 
-SkyCast is a Flutter weather forecast app built for Android and iOS. It delivers current weather, hourly updates, and a 5-day forecast with animated transitions, offline caching, provider fallback, and user-friendly handling for network and location failures.
+SkyCast is a Flutter weather forecast app built with a single Flutter codebase and platform folders for Android, iOS, web, Windows, macOS, and Linux. It delivers current weather, hourly updates, and a 5-day forecast with animated transitions, offline caching, provider fallback, and user-friendly handling for network and location failures.
 
 ## App Type
 
 This repository contains a `Weather App`.
+
+## HNG Platform Adaptation Compliance
+
+This section tracks the final implementation against the multi-platform requirement.
+
+| Requirement | Current status |
+| --- | --- |
+| Single codebase for mobile, desktop, and web | Done. The app is built from one Flutter codebase with Android, iOS, web, Windows, macOS, and Linux targets. |
+| Responsive layouts based on screen size | Done. The UI uses `LayoutBuilder`, `MediaQuery`, constrained content widths, wrap layouts, and a wide-screen two-column forecast layout. It responds to window size, not platform name alone. |
+| Platform detection and platform-specific adaptation | Done. `AdaptivePlatform` uses `kIsWeb`, `defaultTargetPlatform`, and screen width to identify mobile, desktop, web, wide layouts, and desktop-like experiences. |
+| Multiple input methods and navigation patterns | Done. The app supports touch gestures, pull-to-refresh, text input submission, mouse hover states, right-click menus, keyboard shortcuts, tab traversal, a desktop sidebar, a mobile drawer, and a desktop menu bar. |
+| Keyboard shortcuts | Done. The app implements more than five shortcuts through Flutter `Shortcuts` and `Actions`. |
+| Mouse hover states | Done. Sidebar actions, hourly forecast tiles, and daily forecast rows include intentional hover feedback for mouse users. |
+| Keyboard tab navigation | Done. The app wraps the experience in a `FocusTraversalGroup` and uses focusable Material controls plus a dedicated search focus node for keyboard users. |
+| Sidebar or menu-bar navigation | Done. Wide desktop/web layouts include a sidebar, mobile layouts include a drawer, and desktop-like layouts include an application-style `MenuBar`. |
+| Shared data layer | Done. The UI uses `WeatherController`, `WeatherRepository`, provider classes, shared weather models, and cache logic across the app. |
+| Platform storage and offline functionality | Done. Offline caching uses `shared_preferences`, and `StorageProfile` documents the platform storage mechanism shown inside the app. Cached forecasts are reused when live providers fail. |
+| Resizable desktop window content adaptation | Done. Flutter desktop windows are resizable by default, and the content adapts through responsive breakpoints, constrained widths, wrapping content, and wide/narrow layout changes. |
+| Desktop application menu: File, Edit, View, Help | Done. Desktop-like layouts show an application-style menu with File, Edit, View, and Help sections. |
+| Right-click context menus | Done. The header/search area, current weather card, and forecast sections expose contextual right-click actions. |
+| LinkedIn/X documentation post | Ready. A final LinkedIn post is provided outside the project for publishing and tagging the HNG Internship account. |
+
+## Desktop, Web, And Keyboard Features
+
+- Desktop-style application menu with `File`, `Edit`, `View`, and `Help`
+- Wide-screen sidebar navigation for Weather, Forecast, Offline, Refresh, and My Location
+- Mobile drawer navigation for the same core sections
+- Right-click context menus on the search/header area, current weather card, and forecast sections
+- Mouse hover feedback on sidebar actions, hourly forecast tiles, and daily forecast rows
+- Keyboard-first search focus and tab traversal support
+
+Keyboard shortcuts:
+
+| Shortcut | Action |
+| --- | --- |
+| `Ctrl/Cmd + R` | Refresh weather |
+| `Ctrl/Cmd + L` | Focus search |
+| `Ctrl/Cmd + Enter` | Submit search |
+| `Ctrl/Cmd + D` | Toggle today's details |
+| `Ctrl/Cmd + M` | Use current location |
+| `Ctrl/Cmd + F` | Jump to forecast |
+| `Esc` | Clear current focus |
 
 ## Features
 
@@ -19,6 +61,9 @@ This repository contains a `Weather App`.
 - Loading skeletons, refresh indicator, and dedicated error states
 - Retry actions for failed requests
 - Expandable weather details panel
+- Adaptive platform shell for mobile, desktop, and web
+- Desktop menu bar, sidebar navigation, right-click context menus, keyboard shortcuts, and hover states
+- In-app offline storage panel showing live/stale cache status and platform storage behavior
 
 ## APIs Used
 
@@ -183,6 +228,7 @@ lib/
     config/
     core/
     data/
+    platform/
     presentation/
     services/
 test/
@@ -222,8 +268,11 @@ flutter run \
 
 Validated with:
 
+- `dart format lib test`
 - `flutter analyze`
 - `flutter test`
+- `flutter build web`
+- `flutter build windows`
 
 ## Deep Project Walkthrough
 
