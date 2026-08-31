@@ -29,6 +29,11 @@ jobs:
       - name: Regenerate Android platform files
         run: flutter create --platforms=android --overwrite .
 
+      - name: Enforce correct application ID
+        run: |
+          sed -i 's/applicationId = ".*"/applicationId = "com.skycast.weather"/' android/app/build.gradle.kts
+          grep applicationId android/app/build.gradle.kts
+
       - name: Build APK
         run: flutter build apk --release
 
