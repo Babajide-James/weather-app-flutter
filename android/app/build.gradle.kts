@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.news_api"
+    namespace = "com.skycast.weather"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
